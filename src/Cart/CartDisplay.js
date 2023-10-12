@@ -1,13 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import CartContext from "../Store/cart-context";
 
-const CartDisplay = ({ data }) => {
+const CartDisplay = () => {
+  const cartCtx = useContext(CartContext);
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const removeItem = (id) => {
+    cartCtx.removeItem(id);
+  };
 
   return (
     <>
@@ -27,17 +34,18 @@ const CartDisplay = ({ data }) => {
             <Col>Action </Col>
           </Row>
           <hr />
-          {data.map((item, index) => (
-            <div key={index}>
+          {cartCtx.items.map((item) => (
+            <div key={item.id}>
               <Row>
                 <Col> {item.title}</Col>
                 <Col>{item.price}</Col>
-                <Col> {item.quantity}</Col>
+                <Col>1</Col>
                 <Col>
                   <Button
                     variant="danger"
                     onClick={() => {
                       // Implement your remove item logic here
+                      removeItem(item.id);
                     }}
                   >
                     Remove
