@@ -16,10 +16,17 @@ const CartDisplay = () => {
     cartCtx.removeItem(id);
   };
 
+  // Total of array price x quantity
+
+  const overallTotal = cartCtx.items.reduce((total, item) => {
+    const totalAmount = item.price * item.quantity;
+    return total + totalAmount;
+  }, 0);
+
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
-        Cart
+        Cart {cartCtx.items.length}
       </Button>
 
       <Modal show={show} onHide={handleClose}>
@@ -39,7 +46,7 @@ const CartDisplay = () => {
               <Row>
                 <Col> {item.title}</Col>
                 <Col>{item.price}</Col>
-                <Col>1</Col>
+                <Col>{item.quantity}</Col>
                 <Col>
                   <Button
                     variant="danger"
@@ -55,6 +62,7 @@ const CartDisplay = () => {
               <hr />
             </div>
           ))}
+          <b>Total Amount: ₹ {overallTotal}</b>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
