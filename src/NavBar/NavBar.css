@@ -1,0 +1,8 @@
+.nav-link {
+    text-decoration: none; /* Remove underline */
+    color: black; /* Set the color to black */
+  }
+  
+  .bold-text {
+    font-weight: bold;
+  }

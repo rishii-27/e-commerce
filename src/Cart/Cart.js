@@ -23,7 +23,7 @@ import CartDisplay from "./CartDisplay";
 // ];
 const Cart = () => {
   return (
-    <div className="mt-5 d-flex justify-content-end">
+    <div>
       <CartDisplay />
     </div>
   );
