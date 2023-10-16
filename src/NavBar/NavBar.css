@@ -1,8 +1,11 @@
 .nav-link {
     text-decoration: none; /* Remove underline */
-    color: black; /* Set the color to black */
+    color: rgba(13, 1, 1, 0.914); /* Set the color to black */
+    font-size: large;
   }
   
   .bold-text {
     font-weight: bold;
+    font-size: x-large;
+
   }

@@ -2,9 +2,9 @@ import { Container } from "react-bootstrap";
 import Products from "./Products/Products";
 import CartProvider from "./Store/CartProvider";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Home from "./Home";
-import About from "./About";
+import About from "./About/About";
 import RootLayout from "./Root";
+import Home from "./Home/Home";
 
 const routes = createBrowserRouter([
   {

@@ -1,0 +1,15 @@
+.about-us-page h2 {
+  font-size: 2rem;
+  margin-top: 20px;
+}
+
+.about-us-page p {
+  font-size: 1.25rem;
+}
+
+.about-us-page img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #c8b6b6;
+  border-radius: 50%;
+}
