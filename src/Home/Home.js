@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Button } from "react-bootstrap";
 import "../Home/Home.css";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -8,7 +9,9 @@ const Home = () => {
       {/* Hero Section */}
       <div className="hero-section bg-dark text-white text-center py-5">
         <h1>Welcome to the Art Gallery</h1>
-        <Button variant="primary">Explore Artwork</Button>
+        <Link to="/contactus">
+          <Button variant="primary">Contact Artwork</Button>
+        </Link>
       </div>
 
       {/* Discover the Extraordinary */}

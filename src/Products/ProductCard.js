@@ -27,7 +27,7 @@ const CardGrid = ({ data }) => {
                   <button
                     type="button"
                     onClick={() => addToCartHandle(item)}
-                    className="btn btn-primary"
+                    className="btn btn-primary mt-0"
                   >
                     Add To Cart
                   </button>

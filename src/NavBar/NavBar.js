@@ -29,6 +29,11 @@ const NavBar = () => {
                 About
               </NavLink>
             </Nav.Link>
+            <Nav.Link>
+              <NavLink to="/contactus" className="nav-link">
+                Contact Us
+              </NavLink>
+            </Nav.Link>
           </Nav>
           <Cart />
         </Navbar.Collapse>
