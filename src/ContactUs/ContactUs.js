@@ -7,12 +7,41 @@ const ContactUs = () => {
   const [phone, setPhone] = useState("");
 
   // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // You can use the 'name', 'email', and 'phone' variables here for further processing
-    console.log("Name:", name);
-    console.log("Email:", email);
-    console.log("Phone:", phone);
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+
+    const info = {
+      cname: name,
+      cemail: email,
+      cphone: phone,
+    };
+
+    try {
+      const response = await fetch(
+        `https://art-gallery-6bbdf-default-rtdb.firebaseio.com/information.json`,
+        {
+          method: "POST",
+          body: JSON.stringify(info),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      console.log(data);
+
+      // Clear the form fields after successful submission
+      setName("");
+      setEmail("");
+      setPhone("");
+    } catch (error) {
+      console.error("Error submitting data to Firebase:", error);
+    }
   };
 
   return (
