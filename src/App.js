@@ -6,6 +6,7 @@ import About from "./About/About";
 import RootLayout from "./Root";
 import Home from "./Home/Home";
 import ContactUs from "./ContactUs/ContactUs";
+import ProductDetail from "./Products/ProductDetail";
 
 const routes = createBrowserRouter([
   {
@@ -14,6 +15,7 @@ const routes = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/products", element: <Products /> },
+      { path: "/products/:title", element: <ProductDetail /> }, // Add dynamic route
       { path: "/about", element: <About /> },
       { path: "/contactus", element: <ContactUs /> },
     ],

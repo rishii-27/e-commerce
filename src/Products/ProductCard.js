@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import CartContext from "../Store/cart-context";
+import { Link } from "react-router-dom"; // Import Link
 
 const CardGrid = ({ data }) => {
   const cartCtx = useContext(CartContext);
@@ -16,7 +17,9 @@ const CardGrid = ({ data }) => {
           <div key={item.id} className="col-lg-4 col-md-6 mb-4">
             <div className="card">
               <div className="card-body">
-                <h5 className="card-title text-center">{item.title}</h5>
+                <h5 className="card-title text-center">
+                  <Link to={`/products/${item.title}`}>{item.title}</Link>
+                </h5>
                 <img
                   src={item.imageUrl}
                   className="card-img-top"
