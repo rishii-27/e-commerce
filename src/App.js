@@ -15,7 +15,7 @@ const routes = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/products", element: <Products /> },
-      { path: "/products/:title", element: <ProductDetail /> }, // Add dynamic route
+      { path: "/products/:title/:price", element: <ProductDetail /> },
       { path: "/about", element: <About /> },
       { path: "/contactus", element: <ContactUs /> },
     ],

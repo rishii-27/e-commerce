@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 
 const ProductDetail = () => {
-  const { title } = useParams();
+  const { title, price } = useParams();
 
   // Fetch product details based on the title or use data from the context.
   // You can add the details here.
@@ -11,6 +11,7 @@ const ProductDetail = () => {
     <div className="container text-center mt-5">
       <h2>Product Details</h2>
       <p>Title: {title}</p>
+      <p>Price: ₹{price}</p>
     </div>
   );
 };

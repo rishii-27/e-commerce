@@ -18,7 +18,9 @@ const CardGrid = ({ data }) => {
             <div className="card">
               <div className="card-body">
                 <h5 className="card-title text-center">
-                  <Link to={`/products/${item.title}`}>{item.title}</Link>
+                  <Link to={`/products/${item.title}/${item.price}`}>
+                    {item.title}
+                  </Link>
                 </h5>
                 <img
                   src={item.imageUrl}
