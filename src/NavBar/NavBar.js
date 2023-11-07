@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import Cart from "../Cart/Cart";
 import "../NavBar/NavBar.css";
+import CartContext from "../Store/cart-context";
 
 const NavBar = () => {
+  const authCtx = useContext(CartContext);
+
+  const logoutHandler = () => {
+    authCtx.isLoggedOut();
+  };
+
   return (
     <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
       <Container>
@@ -17,15 +24,33 @@ const NavBar = () => {
             <NavLink to="/" className="nav-link">
               Home
             </NavLink>
-            <NavLink to="/products" className="nav-link">
-              Products
-            </NavLink>
+            {authCtx.status ? (
+              <NavLink to="/products" className="nav-link">
+                Products
+              </NavLink>
+            ) : (
+              ""
+            )}
             <NavLink to="/about" className="nav-link">
               About
             </NavLink>
             <NavLink to="/contactus" className="nav-link">
               Contact Us
             </NavLink>
+
+            {authCtx.status ? (
+              <NavLink
+                to="/logout"
+                className="nav-link"
+                onClick={logoutHandler}
+              >
+                Logout
+              </NavLink>
+            ) : (
+              <NavLink to="/login" className="nav-link">
+                Login
+              </NavLink>
+            )}
           </Nav>
           <Cart />
         </Navbar.Collapse>
