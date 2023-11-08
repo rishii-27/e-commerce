@@ -37,22 +37,27 @@ const NavBar = () => {
             <NavLink to="/contactus" className="nav-link">
               Contact Us
             </NavLink>
-
+          </Nav>
+          <Nav>
             {authCtx.status ? (
               <NavLink
                 to="/logout"
                 className="nav-link"
                 onClick={logoutHandler}
               >
-                Logout
+                <button type="button" className="btn btn-dark">
+                  Logout
+                </button>
               </NavLink>
             ) : (
               <NavLink to="/login" className="nav-link">
-                Login
+                <button type="button" className="btn btn-dark">
+                  Login
+                </button>
               </NavLink>
             )}
           </Nav>
-          <Cart />
+          {authCtx.status && <Cart />}
         </Navbar.Collapse>
       </Container>
     </Navbar>
