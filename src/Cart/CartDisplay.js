@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -6,27 +6,51 @@ import CartContext from "../Store/cart-context";
 
 const CartDisplay = () => {
   const cartCtx = useContext(CartContext);
+  const apiUrl = `https://crudcrud.com/api/9d57e4a297d542a897b19136da0feb0b/${cartCtx.email}`;
 
   const [show, setShow] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const removeItem = (id) => {
-    cartCtx.removeItem(id);
+    // Remove the item from the local state
+    const updatedItems = cartItems.filter((item) => item._id !== id);
+    setCartItems(updatedItems);
+
+    // Remove the item from the API
+    fetch(`${apiUrl}/${id}`, {
+      method: "DELETE",
+    })
+      .then(() => {
+        // Fetch updated cart items from the API
+        return fetch(apiUrl);
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        setCartItems(data);
+      });
   };
 
-  // Total of array price x quantity
+  useEffect(() => {
+    // Fetch cart items from the API
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        setCartItems(data);
+      });
+  }, [apiUrl, cartCtx.updateCart]);
 
-  const overallTotal = cartCtx.items.reduce((total, item) => {
-    const totalAmount = item.price * item.quantity;
+  const overallTotal = cartItems.reduce((total, item) => {
+    const totalAmount = item.productPrice * item.quantity;
     return total + totalAmount;
   }, 0);
 
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
-        Cart {cartCtx.items.length}
+        Cart {cartItems.length}
       </Button>
 
       <Modal show={show} onHide={handleClose}>
@@ -41,18 +65,17 @@ const CartDisplay = () => {
             <Col>Action </Col>
           </Row>
           <hr />
-          {cartCtx.items.map((item) => (
-            <div key={item.id}>
+          {cartItems.map((item) => (
+            <div key={item._id}>
               <Row>
-                <Col> {item.title}</Col>
-                <Col>{item.price}</Col>
+                <Col>{item.productName}</Col>
+                <Col>{item.productPrice}</Col>
                 <Col>{item.quantity}</Col>
                 <Col>
                   <Button
                     variant="danger"
                     onClick={() => {
-                      // Implement your remove item logic here
-                      removeItem(item.id);
+                      removeItem(item._id);
                     }}
                   >
                     Remove

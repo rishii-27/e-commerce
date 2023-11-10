@@ -39,7 +39,7 @@ const Login = () => {
         emailInputRef.current.value = "";
         passwordInputRef.current.value = "";
         setError(null); // Clear any previous errors
-        authCtx.isLoggedIn(data.idToken);
+        authCtx.isLoggedIn(data.idToken, data.email);
         console.log(authCtx);
         console.log(data);
         navigate("/products"); // Redirect to the dashboard page upon successful login
