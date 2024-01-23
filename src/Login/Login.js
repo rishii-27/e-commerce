@@ -64,7 +64,7 @@ const Login = () => {
                     type="email"
                     className="form-control"
                     id="emailId"
-                    placeholder="Enter your email Id"
+                    placeholder="test@test.com"
                     required
                     ref={emailInputRef}
                   />
@@ -75,7 +75,7 @@ const Login = () => {
                     type="password"
                     className="form-control"
                     id="password"
-                    placeholder="Enter your password"
+                    placeholder="123456"
                     required
                     ref={passwordInputRef}
                   />
