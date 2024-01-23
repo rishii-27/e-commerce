@@ -52,7 +52,7 @@ const NavBar = () => {
             ) : (
               <NavLink to="/login" className="nav-link">
                 <button type="button" className="btn btn-dark">
-                  Login
+                  Login To View Products
                 </button>
               </NavLink>
             )}
