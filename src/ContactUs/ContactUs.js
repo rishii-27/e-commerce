@@ -5,6 +5,7 @@ const ContactUs = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [error, setError] = useState(null);
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -29,7 +30,7 @@ const ContactUs = () => {
       );
 
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error("API Limit Exhausted");
       }
 
       const data = await response.json();
@@ -40,7 +41,10 @@ const ContactUs = () => {
       setEmail("");
       setPhone("");
     } catch (error) {
-      console.error("Error submitting data to Firebase:", error);
+      setError("Error submitting data to Firebase: API Limit Exhausted");
+      setName("");
+      setEmail("");
+      setPhone("");
     }
   };
 
@@ -49,6 +53,7 @@ const ContactUs = () => {
       <div className="row">
         <div className="col-lg-6 mx-auto">
           <h1>Contact Us</h1>
+          {error && <div className="alert alert-danger">{error}</div>}
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Name</label>
