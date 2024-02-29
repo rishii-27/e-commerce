@@ -4,7 +4,7 @@ import CartContext from "./cart-context";
 const CartProvider = (props) => {
   const initialToken = localStorage.getItem("token");
   const userEmail = localStorage.getItem("email");
-  const [items, updatedItems] = useState([]);
+  const [items, setItems] = useState([]);
   const [token, setToken] = useState(!!initialToken);
 
   useEffect(() => {
@@ -15,36 +15,14 @@ const CartProvider = (props) => {
     }
   }, [initialToken]);
 
-
   const addItemToCartHandler = (item) => {
-    const apiUrl = `https://crudcrud.com/api/9d57e4a297d542a897b19136da0feb0b/${userEmail}`;
+    const apiUrl = `https://art-gallery-6bbdf-default-rtdb.firebaseio.com/${userEmail}.json`;
 
-    // Check if the item is already in the cart
+    // Fetch existing items from the cart
     fetch(apiUrl)
       .then((response) => response.json())
       .then((cartItems) => {
-        const existingItem = cartItems.find(
-          (cartItem) => cartItem.productId === item.id
-        );
-
-        if (existingItem) {
-          // If the item is already in the cart, update the quantity by adding 1
-          const updatedQuantity = existingItem.quantity + 1;
-
-          // Update the item in the API
-          fetch(`${apiUrl}/${existingItem._id}`, {
-            method: "PUT",
-            body: JSON.stringify({
-              productId: item.id,
-              productName: item.title,
-              productPrice: item.price,
-              quantity: updatedQuantity,
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-        } else {
+        if (cartItems) {
           // If the item is not in the cart, add it with a quantity of 1
           fetch(apiUrl, {
             method: "POST",
@@ -57,33 +35,52 @@ const CartProvider = (props) => {
             headers: {
               "Content-Type": "application/json",
             },
-          });
+          })
+            .then(() => {
+              // Update the local state after successful addition
+              setItems((prevItems) => [...prevItems, { ...item, quantity: 1 }]);
+            })
+            .catch((error) =>
+              console.error("Error adding new item to cart:", error)
+            );
+        } else {
+          // If cart is empty, add the item
+          fetch(apiUrl, {
+            method: "POST",
+            body: JSON.stringify({
+              productId: item.id,
+              productName: item.title,
+              productPrice: item.price,
+              quantity: 1,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then(() => {
+              // Update the local state after successful addition
+              setItems((prevItems) => [...prevItems, { ...item, quantity: 1 }]);
+            })
+            .catch((error) =>
+              console.error("Error adding new item to an empty cart:", error)
+            );
         }
-      });
-
-    //   // Check if the item with the same ID already exists in the cart
-    //   const itemIndex = items.findIndex((cartItem) => cartItem.id === item.id);
-
-    //   if (itemIndex !== -1) {
-    //     // If the item already exists, increase its quantity
-    //     const updatedItem = [...items];
-    //     updatedItem[itemIndex].quantity++;
-    //     updatedItems(updatedItem);
-    //   } else {
-    //     // If the item is not in the cart, add it with a quantity of 1
-    //     updatedItems([...items, { ...item, quantity: 1 }]);
-    //   }
+      })
+      .catch((error) => console.error("Error fetching cart items:", error));
   };
 
   const removeItemFromCartHandler = (id) => {
+    const apiUrl = `https://art-gallery-6bbdf-default-rtdb.firebaseio.com/${userEmail}/${id}.json`;
+
     // Remove the item from the API
-    const apiUrl = `https://crudcrud.com/api/9d57e4a297d542a897b19136da0feb0b/${userEmail}`;
-
-    fetch(`${apiUrl}/${id}`, {
+    fetch(apiUrl, {
       method: "DELETE",
-    });
-
-    updatedItems(items.filter((item) => item.id !== id));
+    })
+      .then(() => {
+        // Update the local state after successful removal
+        setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+      })
+      .catch((error) => console.error("Error removing item from cart:", error));
   };
 
   const loginHandle = (idToken, email) => {
@@ -113,8 +110,7 @@ const CartProvider = (props) => {
     addItem: addItemToCartHandler,
     removeItem: removeItemFromCartHandler,
   };
-  console.log(cartContext.email);
-
+  console.log(items);
   return (
     <CartContext.Provider value={cartContext}>
       {props.children}

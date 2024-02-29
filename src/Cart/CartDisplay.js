@@ -6,7 +6,7 @@ import CartContext from "../Store/cart-context";
 
 const CartDisplay = () => {
   const cartCtx = useContext(CartContext);
-  const apiUrl = `https://crudcrud.com/api/9d57e4a297d542a897b19136da0feb0b/${cartCtx.email}`;
+  const apiUrl = `https://art-gallery-6bbdf-default-rtdb.firebaseio.com/${cartCtx.email}.json`;
 
   const [show, setShow] = useState(false);
   const [cartItems, setCartItems] = useState([]);
@@ -20,7 +20,7 @@ const CartDisplay = () => {
     setCartItems(updatedItems);
 
     // Remove the item from the API
-    fetch(`${apiUrl}/${id}`, {
+    fetch(`https://art-gallery-6bbdf-default-rtdb.firebaseio.com/${cartCtx.email}/${id}.json`, {
       method: "DELETE",
     })
       .then(() => {
@@ -29,7 +29,7 @@ const CartDisplay = () => {
       })
       .then((response) => response.json())
       .then((data) => {
-        setCartItems(data);
+        setCartItems(Array.isArray(data) ? data : []); // Ensure data is an array
       });
   };
 
@@ -38,14 +38,28 @@ const CartDisplay = () => {
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
-        setCartItems(data);
+        // Transform the data into an array of items
+        const itemsArray = Object.keys(data).map((key) => {
+          const item = data[key];
+          return {
+            _id: key, // Use the Firebase key as the _id
+            productName: item.productName,
+            productPrice: item.productPrice,
+            quantity: item.quantity,
+          };
+        });
+        setCartItems(itemsArray); // Set the transformed data
       });
   }, [apiUrl, cartCtx.updateCart]);
 
-  const overallTotal = cartItems.reduce((total, item) => {
-    const totalAmount = item.productPrice * item.quantity;
-    return total + totalAmount;
-  }, 0);
+  console.log(cartItems);
+
+  const overallTotal = Array.isArray(cartItems)
+    ? cartItems.reduce((total, item) => {
+        const totalAmount = item.productPrice * item.quantity;
+        return total + totalAmount;
+      }, 0)
+    : 0;
 
   return (
     <>
@@ -65,27 +79,29 @@ const CartDisplay = () => {
             <Col>Action </Col>
           </Row>
           <hr />
-          {cartItems.map((item) => (
-            <div key={item._id}>
-              <Row>
-                <Col>{item.productName}</Col>
-                <Col>{item.productPrice}</Col>
-                <Col>{item.quantity}</Col>
-                <Col>
-                  <Button
-                    variant="danger"
-                    onClick={() => {
-                      removeItem(item._id);
-                    }}
-                  >
-                    Remove
-                  </Button>
-                </Col>
-              </Row>
-              <hr />
-            </div>
-          ))}
-          <b>Total Amount: ₹ {overallTotal}</b>
+          {Array.isArray(cartItems) &&
+            cartItems.map((item) => (
+              <div key={item._id}>
+                <Row>
+                  <Col>{item.productName}</Col>
+                  <Col>{item.productPrice}</Col>
+                  <Col>{item.quantity}</Col>
+                  <Col>
+                    <Button
+                      variant="danger"
+                      onClick={() => {
+                        removeItem(item._id);
+                      }}
+                    >
+                      Remove
+                    </Button>
+                  </Col>
+                </Row>
+                <hr />
+              </div>
+            ))}
+          <b>Total Amount: ₹ {overallTotal.toFixed(2)}</b>{" "}
+          {/* Fixed to 2 decimal places */}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
