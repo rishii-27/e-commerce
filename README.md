@@ -1,70 +1,53 @@
-# Getting Started with Create React App
+# Art Galley E-Commerce Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Art Galley Preview](src/asset/preview.gif)
 
-## Available Scripts
+## Live Demo
 
-In the project directory, you can run:
+Check out the live demo [here](https://art-products.netlify.app/).
 
-### `npm start`
+Welcome to Art Galley, your go-to destination for vibrant color boards! This e-commerce website is built using React, deployed on Netlify, and powered by Firebase for authentication and real-time database functionality. Art Galley offers a seamless shopping experience with user-specific carts and a secure login system.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **User Authentication:** Log in to explore a personalized shopping experience. The demo credentials are:
+  - Email: test@test.com
+  - Password: 123456
 
-### `npm test`
+- **Protected Routes:** Certain sections of the website, including the product viewing and cart tabs, are accessible only to logged-in users.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Firebase Realtime Database:** Your cart data is securely stored and synchronized in real-time using Firebase, ensuring a seamless shopping experience.
 
-### `npm run build`
+- **Token-Based Security:** To enhance security, the app checks Firebase authentication tokens before allowing users to add items to their carts. If the token is expired, users will not be able to add items into cart.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Context API:** The application utilizes React's Context API to manage global state, providing a streamlined way to share data among components.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **React Router:** Navigation is smooth and user-friendly, thanks to React Router, enabling a single-page application feel without unnecessary page reloads.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Getting Started
 
-### `npm run eject`
+To run the project locally, follow these steps:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/rishii-27/e-commerce.git
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. **Navigate to the project directory:**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    ```bash
+    cd e-commerce
+    ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. **Install dependencies:**
 
-## Learn More
+    ```bash
+    npm install
+    ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. **Start the development server:**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    ```bash
+    npm start
+    ```
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+5. **Open your browser and visit** [http://localhost:3000](http://localhost:3000) **to view the app.**
